@@ -4,7 +4,6 @@ import (
 	"math/rand"
 	"net/http"
 	"time"
-	"math"
 
 	"github.com/onsi/ginkgo/internal/spec_iterator"
 
@@ -18,8 +17,6 @@ import (
 	"github.com/onsi/ginkgo/reporters"
 	"github.com/onsi/ginkgo/types"
 )
-
-var MaxParallel = int(math.MaxInt32)
 
 type ginkgoTestingT interface {
 	Fail()
@@ -54,11 +51,6 @@ func (suite *Suite) Run(t ginkgoTestingT, description string, reporters []report
 
 	if config.ParallelNode > config.ParallelTotal || config.ParallelNode < 1 {
 		panic("ginkgo.parallel.node is one-indexed and must be <= ginkgo.parallel.total")
-	}
-
-	// Allow test suite to override max parallelization
-	if MaxParallel < config.ParallelTotal {
-		config.ParallelTotal = MaxParallel
 	}
 
 	r := rand.New(rand.NewSource(config.RandomSeed))
