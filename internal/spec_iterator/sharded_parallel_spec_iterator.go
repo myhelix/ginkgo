@@ -13,7 +13,7 @@ type ShardedParallelIterator struct {
 
 func NewShardedParallelIterator(specs []*spec.Spec, total int, node int) *ShardedParallelIterator {
 	startIndex, count := ParallelizedIndexRange(len(specs), total, node)
-	fmt.Println("###############################", node, startIndex, count)
+	panic(fmt.Sprintf("%s %s %s", node, startIndex, count))
 
 	return &ShardedParallelIterator{
 		specs:    specs,
