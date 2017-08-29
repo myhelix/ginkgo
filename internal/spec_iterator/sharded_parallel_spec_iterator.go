@@ -1,6 +1,9 @@
 package spec_iterator
 
-import "github.com/onsi/ginkgo/internal/spec"
+import (
+	"github.com/onsi/ginkgo/internal/spec"
+	"fmt"
+)
 
 type ShardedParallelIterator struct {
 	specs    []*spec.Spec
@@ -10,6 +13,7 @@ type ShardedParallelIterator struct {
 
 func NewShardedParallelIterator(specs []*spec.Spec, total int, node int) *ShardedParallelIterator {
 	startIndex, count := ParallelizedIndexRange(len(specs), total, node)
+	fmt.Println("###############################", node, startIndex, count)
 
 	return &ShardedParallelIterator{
 		specs:    specs,
