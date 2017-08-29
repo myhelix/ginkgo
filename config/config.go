@@ -91,9 +91,11 @@ func Flags(flagSet *flag.FlagSet, prefix string, includeParallelFlags bool) {
 		flagSet.StringVar(&(GinkgoConfig.SyncHost), prefix+"parallel.synchost", "", "The address for the server that will synchronize the running nodes.")
 		flagSet.StringVar(&(GinkgoConfig.StreamHost), prefix+"parallel.streamhost", "", "The address for the server that the running nodes should stream data to.")
 
+		fmt.Println("Initial", GinkgoConfig.ParallelTotal)
 		if MaxParallel < GinkgoConfig.ParallelTotal {
 			GinkgoConfig.ParallelTotal = MaxParallel
 		}
+		fmt.Println("Final", GinkgoConfig.ParallelTotal)
 	}
 
 	flagSet.BoolVar(&(DefaultReporterConfig.NoColor), prefix+"noColor", false, "If set, suppress color output in default reporter.")
