@@ -51,13 +51,14 @@ func (suite *Suite) Run(t ginkgoTestingT, description string, reporters []report
 	if config.ParallelTotal < 1 {
 		panic("ginkgo.parallel.total must be >= 1")
 	}
-	// Allow test suite to override max parallelization
-	if MaxParallel < config.ParallelTotal {
-		config.ParallelTotal = MaxParallel
-	}
 
 	if config.ParallelNode > config.ParallelTotal || config.ParallelNode < 1 {
 		panic("ginkgo.parallel.node is one-indexed and must be <= ginkgo.parallel.total")
+	}
+
+	// Allow test suite to override max parallelization
+	if MaxParallel < config.ParallelTotal {
+		config.ParallelTotal = MaxParallel
 	}
 
 	r := rand.New(rand.NewSource(config.RandomSeed))
