@@ -47,6 +47,11 @@ at the top of the goroutine that caused this panic.
 `
 const defaultTimeout = 1
 
+// Allow test suite to override max parallelization
+func SetMaxParallel(max int) {
+	suite.MaxParallel = max
+}
+
 var globalSuite *suite.Suite
 var globalFailer *failer.Failer
 
