@@ -14,6 +14,12 @@ func ParallelizedIndexRange(length int, parallelTotal int, parallelNode int) (st
 		}
 	}
 
+	// We are an excess node beyond parallelTotal; this happens if the test overrode the max
+	// parallelism
+	if parallelNode > parallelTotal {
+		return 0, 0
+	}
+
 	// This is the minimum amount of tests that a node will be required to run
 	minTestsPerNode := length / parallelTotal
 
