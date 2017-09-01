@@ -49,8 +49,14 @@ func (suite *Suite) Run(t ginkgoTestingT, description string, reporters []report
 		panic("ginkgo.parallel.total must be >= 1")
 	}
 
-	if config.ParallelNode > config.ParallelTotal || config.ParallelNode < 1 {
-		panic("ginkgo.parallel.node is one-indexed and must be <= ginkgo.parallel.total")
+	if config.ParallelNode < 1 {
+		panic("ginkgo.parallel.node is one-indexed")
+	}
+
+	if config.ParallelNode > config.ParallelTotal {
+		// Excess to requirements; generally because the test suite overrode ParallelTotal via
+		// SetMaxParallel
+		return true, false
 	}
 
 	r := rand.New(rand.NewSource(config.RandomSeed))
@@ -88,7 +94,7 @@ func (suite *Suite) generateSpecsIterator(description string, config config.Gink
 
 	var iterator spec_iterator.SpecIterator
 
-	if config.ParallelTotal > 1 {
+	if config.ParallelTotal > 1 || config.ParallelNode > 1 || config.SyncHost != "" {
 		iterator = spec_iterator.NewParallelIterator(specs.Specs(), config.SyncHost)
 		resp, err := http.Get(config.SyncHost + "/has-counter")
 		if err != nil || resp.StatusCode != http.StatusOK {

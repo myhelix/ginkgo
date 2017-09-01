@@ -49,7 +49,7 @@ const defaultTimeout = 1
 
 // Allow test suite to override max parallelization; should be called in init()
 func SetMaxParallel(max int) {
-	config.MaxParallel = max
+	//config.MaxParallel = max
 }
 
 var globalSuite *suite.Suite
